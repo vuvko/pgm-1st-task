@@ -20,10 +20,28 @@ function [p, c, m, v] = p3_c(params)
   pb = 1/b_size;
   a = params.a_min:params.a_max;
   b = params.b_min:params.b_max;
-  Ab = binopdf(repmat(a, a_size, 1), ...
-      repmat(a', 1, a_size), params.p1);
-  Bb = binopdf(repmat(b, b_size, 1), ...
-      repmat(b', 1, b_size), params.p2);
+  Ab = binopdf(repmat(c, 1, a_size), repmat(a, c_size, 1), params.p1);
+  Bb = binopdf(repmat(c, 1, b_size), repmat(b, c_size, 1), params.p2);
+  [a_idx, ~] = find(Ab);
+  a_idx = unique(a_idx);
+  [b_idx, ~] = find(Bb);
+  b_idx = unique(b_idx);
+  
+  %for i = 1:a_size
+  %  for j = 1:b_size
+  %    p = p + Ab(:, i) .* Bb(:, j);
+  %  end
+  %end
+  
+  for i = 1:length(a_idx)
+    for j = 1:length(b_idx)
+      ii = a_idx(i) - c_min + 1;
+      jj = b_idx(j) - c_min + 1;
+      p(ii + jj - 1) = p(ii + jj - 1) + sum(sum(Ab(ii, :)' * Bb(jj, :)));
+    end
+  end
+  
+  p = p * pa * pb;
   m = 0;
   v = 0;
 end
