@@ -4,10 +4,11 @@
 %   params - структура с полями a_min, a_max, b_min, b_max, p1, p2
 % Выходящие значения:
 %   p - распределение случайной величины (вектор)
+%   c - носитель (вектор)
 %   m - математическое ожидание
-%   d - дисперсия
+%   v - дисперсия
 
-function [c, p, m, d] = p4_c(params)
+function [p, c, m, v] = p4_c(params)
   a_size = params.a_max - params.a_min + 1;
   b_size = params.b_max - params.b_min + 1;
   c_min = 0;
@@ -27,5 +28,5 @@ function [c, p, m, d] = p4_c(params)
     t = t .* lambda;
   end
   m = 0;
-  d = 0;
+  v = 0;
 end
