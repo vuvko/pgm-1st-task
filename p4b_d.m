@@ -36,6 +36,8 @@ function [p, b, m, v] = p4b_d(d, params)
     p = p + prod(DCb * pc)';
   end
   p = p / sum(p);
-  m = 0;
-  v = 0;
+  if nargout > 2
+    m = sum(p .* b);
+    v = sum(p .* (b - m) .* (b - m));
+  end
 end

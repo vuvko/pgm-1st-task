@@ -31,6 +31,8 @@ function [p, c, m, v] = p3_c(params)
   end
   
   p = p * pa * pb;
-  m = 0;
-  v = 0;
+  if nargout > 2
+    m = sum(p .* c);
+    v = sum(p .* (c - m) .* (c - m));
+  end
 end

@@ -27,6 +27,8 @@ function [p, c, m, v] = p4_c(params)
     fact = fact * i;
     t = t .* lambda;
   end
-  m = 0;
-  v = 0;
+  if nargout > 2
+    m = sum(p .* c);
+    v = sum(p .* (c - m) .* (c - m));
+  end
 end

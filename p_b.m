@@ -12,6 +12,8 @@ function [p, b, m, v] = p_b(params)
   length = params.b_max - params.b_min + 1;
   p = zeros(length, 1) + 1/length;
   b = [params.b_min:params.b_max]';
-  m = 1/length;
-  v = 0;
+  if nargout > 2
+    m = sum(p .* b);
+    v = sum(p .* (b - m) .* (b - m));
+  end
 end

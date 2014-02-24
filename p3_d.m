@@ -19,6 +19,8 @@ function [p, d, m, v] = p3_d(params)
   C_v_r = repmat(c_v', d_size, 1);
   C_r = repmat(c', d_size, 1);
   p = sum(binopdf(D_r - C_v_r, C_v_r, params.p3) .* C_r, 2);
-  m = 0;
-  v = 0;
+  if nargout > 2
+    m = sum(p .* d);
+    v = sum(p .* (d - m) .* (d - m));
+  end
 end
