@@ -1,4 +1,4 @@
-% Функция возвращает маргинальное распределение на переменную d для модели №4.
+% Функция возвращает маргинальное распределение на переменную d для модели №3.
 % 
 % Входные параметры:
 %   params - структура с полями a_min, a_max, b_min, b_max, p1, p2
@@ -8,11 +8,11 @@
 %   m - математическое ожидание
 %   v - дисперсия
 
-function [p, d, m, v] = p4_d(params)
+function [p, d, m, v] = p3_d(params)
   d_min = 0;
   d_max = 2 * (params.a_max + params.b_max);
   d_size = d_max - d_min + 1;
-  [c, c_v] = p4_c(params);
+  [c, c_v] = p3_c(params);
   c_size = length(c);
   d = [d_min:d_max]';
   D_r = repmat(d, 1, c_size);
