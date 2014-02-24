@@ -1,7 +1,6 @@
-% Функция возвращает распределение p(b | a, d_1, ..., d_n) для модели №4
+% Функция возвращает распределение p(b | d_1, ..., d_n) для модели №3
 % 
 % Входные параметры:
-%   a - значение параметра a
 %   d - значения параметра d (вектор)
 %   params - структура с полями a_min, a_max, b_min, b_max, p1, p2, p3
 % Выходящие значения:
@@ -10,8 +9,10 @@
 %   m - математическое ожидание
 %   v - дисперсия
 
-function [p, b, m, v] = p4b_ad(a, d, params)
+function [p, b, m, v] = p3b_d(d, params)
   d = d(:);
+  a_size = params.a_max - params.a_min + 1;
+  a = [params.a_min:params.a_max];
   b_size = params.b_max - params.b_min + 1;
   b = [params.b_min:params.b_max];
   c_min = 0;
@@ -23,9 +24,16 @@ function [p, b, m, v] = p4b_ad(a, d, params)
       repmat(c, n, 1), params.p3);
   CBp = repmat(c', 1, b_size);
   p = zeros(b_size, 1);
-  lambda = a * params.p1 + b * params.p2;
-  pc = poisspdf(CBp, repmat(lambda, c_size, 1));
-  p = prod(DCb * pc)';
+  pc = zeros(c_size, b_size);
+  Ab = binopdf(repmat(c', 1, a_size), repmat(a, c_size, 1), params.p1);
+  Bb = binopdf(repmat(c', 1, b_size), repmat(b, c_size, 1), params.p2);
+  for i = 1:a_size
+    for j = 1:b_size
+      cv = conv(Ab(:, i), Bb(:, j));
+      pc(:, j) = cv(1:c_size);
+    end
+    p = p + prod(DCb * pc)';
+  end
   p = p / sum(p);
   if nargout > 2
     m = sum(p .* b);

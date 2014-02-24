@@ -20,6 +20,16 @@ fprintf(1, 'p_3(c) --- %.5f\n', tp3c);
 tic; p3_d(params);
 tp3d = toc;
 fprintf(1, 'p_3(d) --- %.5f\n', tp3d);
+fprintf(1, 'Generating:\n');
+for N = 3:7:50
+  tic; d = m3_generate(N, ma, mb, params);
+  td = toc;
+  tic; p3b_d(d, params);
+  tbd = toc;
+  tic; p3b_ad(ma, d, params);
+  tbad = toc;
+  fprintf(1, 'N = %3d | gen --- %.2f | p(b|d_1,...,d_n) --- %.2f | p(b|a,d_1,...,d_n) --- %.2f\n', N, td, tbd, tbad);
+end
 
 % Модель 4
 fprintf(1, 'Model 4:\n');
