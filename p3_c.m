@@ -1,6 +1,6 @@
-% Функция 
+% Функция возвращает маргинальное распределение на переменную c для модели №3.
 % 
-% Входящие параметры:
+% Входные параметры:
 %   params - структура с полями a_min, a_max, b_min, b_max, p1, p2
 % Выходящие значения:
 %   p - распределение случайной величины (вектор)
@@ -22,22 +22,11 @@ function [p, c, m, v] = p3_c(params)
   b = params.b_min:params.b_max;
   Ab = binopdf(repmat(c, 1, a_size), repmat(a, c_size, 1), params.p1);
   Bb = binopdf(repmat(c, 1, b_size), repmat(b, c_size, 1), params.p2);
-  [a_idx, ~] = find(Ab);
-  a_idx = unique(a_idx);
-  [b_idx, ~] = find(Bb);
-  b_idx = unique(b_idx);
   
-  %for i = 1:a_size
-  %  for j = 1:b_size
-  %    p = p + Ab(:, i) .* Bb(:, j);
-  %  end
-  %end
-  
-  for i = 1:length(a_idx)
-    for j = 1:length(b_idx)
-      ii = a_idx(i) - c_min + 1;
-      jj = b_idx(j) - c_min + 1;
-      p(ii + jj - 1) = p(ii + jj - 1) + sum(sum(Ab(ii, :)' * Bb(jj, :)));
+  for i = 1:a_size
+    for j = 1:b_size
+      cv = conv(Ab(:, i), Bb(:, j));
+      p = p + cv(1:c_size);
     end
   end
   
