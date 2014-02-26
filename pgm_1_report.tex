@@ -15,7 +15,8 @@
 
   \Large\bfseries
     Задание по графическим моделям №1\\[5mm]
-    <<Байесовские рассуждения>>
+    <<Байесовские рассуждения>>\\
+    Вариант №3
   \\[40mm]
 \end{center}
 \begin{flushright}
@@ -30,12 +31,18 @@
 \tableofcontents
 \newpage
 
-\section{Цели задания}
-
 \section{Постановка задачи}
 
+В третьем варианте рассматриваются 2 модели, описанные в \ref{tbl:model}. Для проведения экспериментов параметры полагались следующими:
+
+\begin{itemize}
+  \item $a_{min} = 15$, $a_{max} = 35$
+  \item $b_{min} = 250$, $b_{max} = 350$
+  \item $p_1 = 0.5$, $p_2 = 0.05$, $p_3 = 0.5$
+\end{itemize}
+
 \begin{table}[hbtp]
-  \begin{tabular}{c|l}
+  \begin{tabular}{cl}
     \includegraphics[width=0.25\textwidth]{for_report/BayesML2010_gm2.png} & 
     \begin{tabular}{l}
       Модель 3: \\
@@ -60,8 +67,8 @@
       $
     \end{tabular}
   \end{tabular}
-  \label{tbl:model}
   \caption{Иллюстрация моделей}
+  \label{tbl:model}
 \end{table}
 
 \section{Результаты экспериментов}
@@ -94,6 +101,8 @@
   \caption{Дисперсия распределений.}
 \end{table}
 
+\paragraph{}
+
 \subsection{Время работы основных функций}
 
 В задании было ограничение на время работы основных функций.
@@ -109,10 +118,10 @@
   \centering
   \begin{tabular}{r|c|c}
     Распределение & Модель 3 & Модель 4 \\ \hline
-    $p(c)$ & 0.71466 & 0.00701 \\ \hline
-    $p(d)$ & 1.37366 & 0.62549 \\ \hline
-    $p(b|d_1, \dots, d_N)$ & 0.30538 & 0.94337 \\ \hline
-    $p(b|a, d_1, \dots, d_N)$ & 0.12860 & 0.26952 \\ \hline
+    $p(c)$ & 0.03779 & 0.00060 \\ \hline
+    $p(d)$ & 0.07836 & 0.04476 \\ \hline
+    $p(b|d_1, \dots, d_N)$ & 0.00950 & 0.03922 \\ \hline
+    $p(b|a, d_1, \dots, d_N)$ & 0.00728 & 0.01740 \\ \hline
   \end{tabular}
 \caption{Время работы основных функций.}
 \label{tbl:time}
@@ -122,82 +131,68 @@
 
 Предлагалось провести исследование по прогнозированию количества студентов на потоке, когда нам известны другие параметры модели.
 Для сравнения прогноза были построены графики распределений, математических ожиданий и дисперсий для каждого случая (даны только значения параметров $d_1, \dots, d_n$ и дано также значение параметра $a$).
+Из графиков \ref{fig:pb_d}, \ref{fig:mv} видно, что основной вклад в прогноз даёт знание параметра $a$, а увеличение количества $d_i$ либо уточняет этот прогноз в случае, когда известно $a$, либо, наоборот, уменьшает точность, когда $a$ неизвестно.
 
-% pb_d1
 \begin{figure}[p]
   \centering
   \begin{subfigure}[b]{0.48\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{for_report/p3b_d1.eps}
-    \label{fig:p3b_d1}
-    \caption{Модель 3}
+    \begin{tabular}{cc}
+      \includegraphics[width=0.45\textwidth]{for_report/p3b_d1.eps} &
+      \includegraphics[width=0.45\textwidth]{for_report/p4b_d1.eps} \\
+      \includegraphics[width=0.45\textwidth]{for_report/p3b_d2.eps} &
+      \includegraphics[width=0.45\textwidth]{for_report/p4b_d2.eps} \\
+      3-я модель & 4-я модель
+    \end{tabular}
+    
+    \label{fig:pb_d}
+    \caption{$p(b | d_1, \dots, d_n)$}
   \end{subfigure}
   \begin{subfigure}[b]{0.48\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{for_report/p4b_d1.eps}
-    \label{fig:p4b_d1}
-    \caption{Модель 4}
+    \begin{tabular}{cc}
+      \includegraphics[width=0.45\textwidth]{for_report/p3b_ad1.eps} &
+      \includegraphics[width=0.45\textwidth]{for_report/p4b_ad1.eps} \\
+      \includegraphics[width=0.45\textwidth]{for_report/p3b_ad2.eps} &
+      \includegraphics[width=0.45\textwidth]{for_report/p4b_ad2.eps} \\
+      3-я модель & 4-я модель
+    \end{tabular}
+    \label{fig:pb_ad}
+    \caption{$p(b | a, d_1, \dots, d_n)$}
   \end{subfigure}
-  \label{fig:pb_d1}
-  \caption{На графиках показаны распределения $p(b|d_1,\dots,d_n)$ при различном количестве $d$. Чем краснее график --- тем больше параметров $d$ было передано. Синим отмечено априорное распределение $p(b)$.}
+  \caption{На графиках показаны распределения оценки распределения $b$ при прочих параметрах. Синим цветом показано априорное распределение $b$. Остальные графики --- оценки при различном количестве $d_i$, чем краснее график, тем больше $n$. В верхнем ряду параметры $d$ сгенерированы из распределения $p(d_i | a, b)$. В нижнем все $d_i$ равны математическому ожиданию своих априорных распределений (округлённых до целого).}
+  \label{fig:pb_d}
 \end{figure}
 
 \begin{figure}[p]
   \centering
   \begin{subfigure}[b]{0.48\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{for_report/pb_d1m.eps}
-    \label{fig:pb_d1m}
+    \begin{tabular}{cc}
+      \includegraphics[width=0.45\textwidth]{for_report/pb_d1m.eps} &
+      \includegraphics[width=0.45\textwidth]{for_report/pb_d2m.eps} \\
+      \includegraphics[width=0.45\textwidth]{for_report/pb_ad1m.eps} &
+      \includegraphics[width=0.45\textwidth]{for_report/pb_ad2m.eps} \\
+      $d_i$ сгенерированы & 
+      $d_i = \mathbb{E}p(d)$ 
+    \end{tabular}
     \caption{Математическое ожидание.}
   \end{subfigure}
   \begin{subfigure}[b]{0.48\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{for_report/pb_d1v.eps}
-    \label{fig:pb_d1v}
+    \begin{tabular}{cc}
+      \includegraphics[width=0.45\textwidth]{for_report/pb_d1v.eps} &
+      \includegraphics[width=0.45\textwidth]{for_report/pb_d2v.eps} \\
+      \includegraphics[width=0.45\textwidth]{for_report/pb_ad1v.eps} &
+      \includegraphics[width=0.45\textwidth]{for_report/pb_ad2v.eps} \\
+      $d_i$ сгенерированы & 
+      $d_i = \mathbb{E}p(d)$ 
+    \end{tabular}
     \caption{Дисперсия.}
   \end{subfigure}
-  \label{fig:pb_d1mv}
-  \caption{}
+  \caption{В верхнем ряду моменты $b|d_1,\dots,d_n$, в нижнем --- $b|a,d_1,\dots,d_n$}
+  \label{fig:mv}
 \end{figure}
-
-% pb_ad1
-\begin{figure}[p]
-  \centering
-  \begin{subfigure}[b]{0.48\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{for_report/p3b_ad1.eps}
-    \label{fig:p3b_ad1}
-    \caption{Модель 3}
-  \end{subfigure}
-  \begin{subfigure}[b]{0.48\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{for_report/p4b_ad1.eps}
-    \label{fig:p4b_ad1}
-    \caption{Модель 4}
-  \end{subfigure}
-  \label{fig:pb_ad1}
-  \caption{На графиках показаны распределения $p(b|a,d_1,\dots,d_n)$ при различном количестве $d$. Чем краснее график --- тем больше параметров $d$ было передано. Синим отмечено априорное распределение $p(b)$.}
-\end{figure}
-
-\begin{figure}[p]
-  \centering
-  \begin{subfigure}[b]{0.48\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{for_report/pb_ad1m.eps}
-    \label{fig:pb_ad1m}
-    \caption{Математическое ожидание.}
-  \end{subfigure}
-  \begin{subfigure}[b]{0.48\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{for_report/pb_ad1v.eps}
-    \label{fig:pb_ad1v}
-    \caption{Дисперсия.}
-  \end{subfigure}
-  \label{fig:pb_ad1mv}
-  \caption{}
-\end{figure}
-
-\section{Выводы}
 
 \begin{thebibliography}{0}
 
