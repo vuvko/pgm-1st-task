@@ -1,0 +1,212 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage[colorlinks,urlcolor=blue]{hyperref}
+\usepackage[space]{grffile}
+\usepackage{caption, subcaption,amsmath,amssymb,graphicx,multicol,epstopdf}
+
+\begin{document}
+
+\begin{titlepage}
+\begin{center}
+  Московский Государственный университет имени М. В. Ломоносова\\
+  Факультет Вычислительной Математики и Кибернетики\\
+  Кафедра Математических Методов Прогнозирования\\[30mm]
+
+  \Large\bfseries
+    Задание по графическим моделям №1\\[5mm]
+    <<Байесовские рассуждения>>
+  \\[40mm]
+\end{center}
+\begin{flushright}
+  Шадриков Андрей
+
+  группа 417
+\end{flushright}
+\center\vspace{\fill} 
+  Москва, 2014
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Цели задания}
+
+\section{Постановка задачи}
+
+\begin{table}[hbtp]
+  \begin{tabular}{c|l}
+    \includegraphics[width=0.25\textwidth]{for_report/BayesML2010_gm2.png} & 
+    \begin{tabular}{l}
+      Модель 3: \\
+      $
+      \begin{array}{rcl}
+      p(a, b, c_1, \dots, c_N, d_1, \dots, d_N) & = & \prod_{n = 1}^N p(d_n | c_n) p(c_n | a, b) p(a) p(b) \\
+      d_n | c_n & \sim & c_n + B(c_n, p_3) \\
+      c_n | a, b & \sim & B(a, p_1) + B(b, p_2) \\
+      a & \sim & R[a_{min},\,a_{max}] \\
+      b & \sim & R[b_{min},\,b_{max}]
+      \end{array}
+      $ \\
+      Модель 4: \\
+      $
+      \begin{array}{rcl}
+      p(a, b, c_1, \dots, c_N, d_1, \dots, d_N) & = & \prod_{n = 1}^N p(d_n | c_n) p(c_n | a, b) p(a) p(b) \\
+      d_n | c_n & \sim & c_n + B(c_n, p_3) \\
+      c_n | a, b & \sim & Poiss(a p_1 + b p_2) \\
+      a & \sim & R[a_{min},\,a_{max}] \\
+      b & \sim & R[b_{min},\,b_{max}]
+      \end{array}
+      $
+    \end{tabular}
+  \end{tabular}
+  \label{tbl:model}
+  \caption{Иллюстрация моделей}
+\end{table}
+
+\section{Результаты экспериментов}
+
+\subsection{Моменты маргинальных распределений}
+
+Важной характеристикой случайной величины являются её моменты.
+Каждая функция маргинального распределения может венуть математическое ожидание и дисперсию соответсвующего распределения.
+
+\begin{table}[hbtp]
+  \centering
+  \begin{tabular}{r|c|c}
+    Распределение & Модель 3 & Модель 4 \\ \hline
+    $p(a)$ & 22.500 & 22.500 \\ \hline
+    $p(b)$ & 300.000 & 300.000 \\ \hline
+    $p(c)$ & 26.250 & 26.250 \\ \hline
+    $p(d)$ & 39.375 & 39.375 \\ \hline
+  \end{tabular}
+  \caption{Математическое ожидание распределений.}
+\end{table}
+\begin{table}[hbtp]
+  \centering
+  \begin{tabular}{r|c|c}
+    Распределение & Модель 3 & Модель 4\\ \hline
+    $p(a)$ & 21.250 & 21.250 \\ \hline
+    $p(b)$ & 850.000 & 850.000 \\ \hline
+    $p(c)$ & 27.312 & 27.312 \\ \hline
+    $p(d)$ & 68.016 & 68.016 \\ \hline
+  \end{tabular}
+  \caption{Дисперсия распределений.}
+\end{table}
+
+\subsection{Время работы основных функций}
+
+В задании было ограничение на время работы основных функций.
+В таблице \ref{tbl:time} приведены замеры времени работы каждой функции на компьютере следующей конфигурации:
+
+\begin{itemize}
+  \item Intel Core i7 @ 3.43 Ghz
+  \item 16 Gb RAM
+  \item Matlab R2013b
+\end{itemize}
+
+\begin{table}[hbtp]
+  \centering
+  \begin{tabular}{r|c|c}
+    Распределение & Модель 3 & Модель 4 \\ \hline
+    $p(c)$ & 0.71466 & 0.00701 \\ \hline
+    $p(d)$ & 1.37366 & 0.62549 \\ \hline
+    $p(b|d_1, \dots, d_N)$ & 0.30538 & 0.94337 \\ \hline
+    $p(b|a, d_1, \dots, d_N)$ & 0.12860 & 0.26952 \\ \hline
+  \end{tabular}
+\caption{Время работы основных функций.}
+\label{tbl:time}
+\end{table}
+
+\subsection{Прогноз количества студентов на потоке}
+
+Предлагалось провести исследование по прогнозированию количества студентов на потоке, когда нам известны другие параметры модели.
+Для сравнения прогноза были построены графики распределений, математических ожиданий и дисперсий для каждого случая (даны только значения параметров $d_1, \dots, d_n$ и дано также значение параметра $a$).
+
+% pb_d1
+\begin{figure}[p]
+  \centering
+  \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{for_report/p3b_d1.eps}
+    \label{fig:p3b_d1}
+    \caption{Модель 3}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{for_report/p4b_d1.eps}
+    \label{fig:p4b_d1}
+    \caption{Модель 4}
+  \end{subfigure}
+  \label{fig:pb_d1}
+  \caption{На графиках показаны распределения $p(b|d_1,\dots,d_n)$ при различном количестве $d$. Чем краснее график --- тем больше параметров $d$ было передано. Синим отмечено априорное распределение $p(b)$.}
+\end{figure}
+
+\begin{figure}[p]
+  \centering
+  \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{for_report/pb_d1m.eps}
+    \label{fig:pb_d1m}
+    \caption{Математическое ожидание.}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{for_report/pb_d1v.eps}
+    \label{fig:pb_d1v}
+    \caption{Дисперсия.}
+  \end{subfigure}
+  \label{fig:pb_d1mv}
+  \caption{}
+\end{figure}
+
+% pb_ad1
+\begin{figure}[p]
+  \centering
+  \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{for_report/p3b_ad1.eps}
+    \label{fig:p3b_ad1}
+    \caption{Модель 3}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{for_report/p4b_ad1.eps}
+    \label{fig:p4b_ad1}
+    \caption{Модель 4}
+  \end{subfigure}
+  \label{fig:pb_ad1}
+  \caption{На графиках показаны распределения $p(b|a,d_1,\dots,d_n)$ при различном количестве $d$. Чем краснее график --- тем больше параметров $d$ было передано. Синим отмечено априорное распределение $p(b)$.}
+\end{figure}
+
+\begin{figure}[p]
+  \centering
+  \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{for_report/pb_ad1m.eps}
+    \label{fig:pb_ad1m}
+    \caption{Математическое ожидание.}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{for_report/pb_ad1v.eps}
+    \label{fig:pb_ad1v}
+    \caption{Дисперсия.}
+  \end{subfigure}
+  \label{fig:pb_ad1mv}
+  \caption{}
+\end{figure}
+
+\section{Выводы}
+
+\begin{thebibliography}{0}
+
+\bibitem{task}
+  \href{http://www.machinelearning.ru/wiki/index.php?title=%D0%93%D1%80%D0%B0%D1%84%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5_%D0%BC%D0%BE%D0%B4%D0%B5%D0%BB%D0%B8_%28%D0%BA%D1%83%D1%80%D1%81_%D0%BB%D0%B5%D0%BA%D1%86%D0%B8%D0%B9%29/2014/%D0%97%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5_1}{Полный текст задания}
+
+\bibitem{export_fig}
+  \href{https://www.google.ru/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0CCkQFjAA&url=http%3A%2F%2Fwww.mathworks.com%2Fmatlabcentral%2Ffileexchange%2F23629-exportfig&ei=B4wNU-eHJYva4QS0wYGQAw&usg=AFQjCNEhL-HxuJ6pWzFD4LyUVngfW8fFFw&sig2=Ap03ODZFTZ3aY95uWxcTow&cad=rja}{Используемая функция для экспорта графиков}
+
+\end{thebibliography}
+
+\end{document}

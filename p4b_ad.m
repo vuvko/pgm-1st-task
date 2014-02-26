@@ -13,7 +13,7 @@
 function [p, b, m, v] = p4b_ad(a, d, params)
   d = d(:);
   b_size = params.b_max - params.b_min + 1;
-  b = [params.b_min:params.b_max];
+  b = [params.b_min:params.b_max]';
   c_min = 0;
   c_max = params.a_max + params.b_max;
   c_size = c_max - c_min + 1;
@@ -23,9 +23,9 @@ function [p, b, m, v] = p4b_ad(a, d, params)
       repmat(c, n, 1), params.p3);
   CBp = repmat(c', 1, b_size);
   p = zeros(b_size, 1);
-  lambda = a * params.p1 + b * params.p2;
+  lambda = a * params.p1 + b' * params.p2;
   pc = poisspdf(CBp, repmat(lambda, c_size, 1));
-  p = prod(DCb * pc)';
+  p = prod(DCb * pc, 1)';
   p = p / sum(p);
   if nargout > 2
     m = sum(p .* b);

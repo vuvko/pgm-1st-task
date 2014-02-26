@@ -1,13 +1,17 @@
 % Скрипт для генерации таблицы времени работы функций (для отчёта)
 
 init3;
+[~, ~, ma] = p_a(params);
+[~, ~, mb] = p_b(params);
+ma = round(ma);
+mb = round(mb);
 filename = 'for report/time.tex';
 f = fopen(filename, 'w');
 
 init3;
 
 fprintf(f, '\\begin{table}[hbtp]\n');
-
+fprintf(f, '  \\centering');
 fprintf(f, '  \\begin{tabular}{r|c|c}\n');
 fprintf(f, '    Распределение & Модель 3 & Модель 4 \\\\ \\hline\n');
 tic; p3_c(params);
@@ -20,7 +24,7 @@ tic; p3_d(params);
 t = toc;
 fprintf(f, '    $p(d)$ & %.5f & ', t);
 tic; p4_d(params);
-tp4d = toc;
+t = toc;
 fprintf(f, '%.5f \\\\ \\hline\n', t);
 
 N = 50;
