@@ -14,7 +14,7 @@ function [p, b, m, v] = p4b_d(d, params)
   a_size = params.a_max - params.a_min + 1;
   a = [params.a_min:params.a_max]';
   b_size = params.b_max - params.b_min + 1;
-  b = [params.b_min:params.b_max];
+  b = [params.b_min:params.b_max]';
   c_min = 0;
   c_max = params.a_max + params.b_max;
   c_size = c_max - c_min + 1;
@@ -25,7 +25,7 @@ function [p, b, m, v] = p4b_d(d, params)
   CBp = repmat(c', 1, b_size);
   p = zeros(b_size, 1);
   lambda = repmat(a, 1, b_size) * params.p1 + ...
-      repmat(b, a_size, 1) * params.p2;
+      repmat(b', a_size, 1) * params.p2;
   el = exp(-lambda);
   pc = zeros(c_size, b_size);
   mc = round(3 * max(max(lambda)) + 1);
@@ -33,7 +33,7 @@ function [p, b, m, v] = p4b_d(d, params)
   for i = 1:a_size
     lc = repmat(lambda(i, :), mc, 1) .^ repmat(c(1:mc)', 1, b_size);
     pc(1:mc, :) = repmat(el(i, :), mc, 1) .* lc ./ fc;
-    p = p + prod(DCb * pc)';
+    p = p + prod(DCb * pc, 1)';
   end
   p = p / sum(p);
   if nargout > 2

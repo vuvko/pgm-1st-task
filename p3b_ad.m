@@ -13,7 +13,7 @@
 function [p, b, m, v] = p3b_ad(a, d, params)
   d = d(:);
   b_size = params.b_max - params.b_min + 1;
-  b = [params.b_min:params.b_max];
+  b = [params.b_min:params.b_max]';
   c_min = 0;
   c_max = params.a_max + params.b_max;
   c_size = c_max - c_min + 1;
@@ -25,12 +25,12 @@ function [p, b, m, v] = p3b_ad(a, d, params)
   p = zeros(b_size, 1);
   pc = zeros(c_size, b_size);
   Ab = binopdf(c', a, params.p1);
-  Bb = binopdf(repmat(c', 1, b_size), repmat(b, c_size, 1), params.p2);
+  Bb = binopdf(repmat(c', 1, b_size), repmat(b', c_size, 1), params.p2);
   for j = 1:b_size
     cv = conv(Ab, Bb(:, j));
     pc(:, j) = cv(1:c_size);
   end
-  p = prod(DCb * pc)';
+  p = prod(DCb * pc, 1)';
   p = p / sum(p);
   if nargout > 2
     m = sum(p .* b);
