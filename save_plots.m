@@ -22,43 +22,43 @@ set(hv, 'Color', 'w');
 plot_pb_d(d1, params, h3, h4, hm, hv);
 
 figure(h3);
-export_fig 'for report/p3b_d1' '-eps'
+export_fig 'for_report/p3b_d1' '-eps'
 figure(h4);
-export_fig 'for report/p4b_d1' '-eps'
+export_fig 'for_report/p4b_d1' '-eps'
 figure(hm);
-export_fig 'for report/pb_d1m' '-eps'
+export_fig 'for_report/pb_d1m' '-eps'
 figure(hv);
-export_fig 'for report/pb_d1v' '-eps'
+export_fig 'for_report/pb_d1v' '-eps'
 
 plot_pb_d(d2, params, h3, h4, hm, hv);
 
 figure(h3);
-export_fig 'for report/p3b_d2' '-eps'
+export_fig 'for_report/p3b_d2' '-eps'
 figure(h4);
-export_fig 'for report/p4b_d2' '-eps'
+export_fig 'for_report/p4b_d2' '-eps'
 figure(hm);
-export_fig 'for report/pb_d2m' '-eps'
+export_fig 'for_report/pb_d2m' '-eps'
 figure(hv);
-export_fig 'for report/pb_d2v' '-eps'
+export_fig 'for_report/pb_d2v' '-eps'
 
 plot_pb_ad(ma, d1, params, h3, h4, hm, hv);
 
 figure(h3);
-export_fig 'for report/p3b_ad1' '-eps'
+export_fig 'for_report/p3b_ad1' '-eps'
 figure(h4);
-export_fig 'for report/p4b_ad1' '-eps'
+export_fig 'for_report/p4b_ad1' '-eps'
 figure(hm);
-export_fig 'for report/pb_ad1m' '-eps'
+export_fig 'for_report/pb_ad1m' '-eps'
 figure(hv);
-export_fig 'for report/pb_ad1v' '-eps'
+export_fig 'for_report/pb_ad1v' '-eps'
 
 plot_pb_ad(ma, d2, params, h3, h4, hm, hv);
 
 figure(h3);
-export_fig 'for report/p3b_ad2' '-eps'
+export_fig 'for_report/p3b_ad2' '-eps'
 figure(h4);
-export_fig 'for report/p4b_ad2' '-eps'
+export_fig 'for_report/p4b_ad2' '-eps'
 figure(hm);
-export_fig 'for report/pb_ad2m' '-eps'
+export_fig 'for_report/pb_ad2m' '-eps'
 figure(hv);
-export_fig 'for report/pb_ad2v' '-eps'
+export_fig 'for_report/pb_ad2v' '-eps'

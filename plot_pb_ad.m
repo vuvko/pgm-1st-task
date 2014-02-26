@@ -25,11 +25,11 @@ function plot_pb_ad(a, d, params, h3, h4, hm, hv)
   
   for i = 2:length(N)
     figure(h4);
-    [p, b, m3(i), v3(i)] = p4b_ad(a, d(1:N(i)), params);
+    [p, b, m4(i), v4(i)] = p4b_ad(a, d(1:N(i)), params);
     plot(b, p, 'Color', [N(i)/50, 1-N(i)/50, 0.0], 'LineWidth', 2);
     hold on;
     figure(h3);
-    [p, b, m4(i), v4(i)] = p3b_ad(a, d(1:N(i)), params);
+    [p, b, m3(i), v3(i)] = p3b_ad(a, d(1:N(i)), params);
     plot(b, p, 'Color', [N(i)/50, 1-N(i)/50, 0.0], 'LineWidth', 2);
     hold on;
   end
