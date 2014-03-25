@@ -1,8 +1,8 @@
 % Скрипт для генерации таблицы времени работы функций (для отчёта)
 
 init3;
-[~, ~, ma] = p_a(params);
-[~, ~, mb] = p_b(params);
+[~, ~, ma] = pa(params);
+[~, ~, mb] = pb(params);
 ma = round(ma);
 mb = round(mb);
 filename = 'for report/time.tex';
@@ -14,16 +14,16 @@ fprintf(f, '\\begin{table}[hbtp]\n');
 fprintf(f, '  \\centering');
 fprintf(f, '  \\begin{tabular}{r|c|c}\n');
 fprintf(f, '    Распределение & Модель 3 & Модель 4 \\\\ \\hline\n');
-tic; p3_c(params);
+tic; p3c(params);
 t = toc;
 fprintf(f, '    $p(c)$ & %.5f & ', t);
-tic; p4_c(params);
+tic; p4c(params);
 t = toc;
 fprintf(f, '%.5f \\\\ \\hline\n', t);
-tic; p3_d(params);
+tic; p3d(params);
 t = toc;
 fprintf(f, '    $p(d)$ & %.5f & ', t);
-tic; p4_d(params);
+tic; p4d(params);
 t = toc;
 fprintf(f, '%.5f \\\\ \\hline\n', t);
 
